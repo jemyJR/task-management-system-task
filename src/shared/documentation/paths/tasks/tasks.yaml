@@ -1,0 +1,126 @@
+/tasks:
+  get:
+    tags:
+      - Tasks
+    summary: List tasks
+    description: Return all tasks, optionally filtered by status and priority.
+    parameters:
+      - in: query
+        name: status
+        required: false
+        schema:
+          type: string
+          enum: [TODO, IN_PROGRESS, DONE]
+      - in: query
+        name: priority
+        required: false
+        schema:
+          type: string
+          enum: [LOW, MEDIUM, HIGH]
+    responses:
+      "200":
+        description: Tasks retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskListResponse"
+      "400":
+        description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnauthorizedError"
+  post:
+    tags:
+      - Tasks
+    summary: Create task
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateTaskRequest"
+    responses:
+      "201":
+        description: Task created successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskResponse"
+      "400":
+        description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+
+/tasks/{id}:
+  get:
+    tags:
+      - Tasks
+    summary: Get task by ID
+    parameters:
+      - $ref: "#/components/parameters/TaskId"
+    responses:
+      "200":
+        description: Task retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskResponse"
+      "404":
+        description: Task not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotFoundError"
+  patch:
+    tags:
+      - Tasks
+    summary: Update task
+    parameters:
+      - $ref: "#/components/parameters/TaskId"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateTaskRequest"
+    responses:
+      "200":
+        description: Task updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskResponse"
+      "400":
+        description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+  delete:
+    tags:
+      - Tasks
+    summary: Delete task
+    parameters:
+      - $ref: "#/components/parameters/TaskId"
+    responses:
+      "200":
+        description: Task deleted successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteTaskResponse"
+      "404":
+        description: Task not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotFoundError"
