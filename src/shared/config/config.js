@@ -16,6 +16,8 @@ const configSchema = Joi.object({
   DB_HOST: Joi.string().required(),
   DB_OPTIONS: Joi.string().default(""),
 
+  ACCESS_TOKEN_SECRET: Joi.string().required(),
+  REFRESH_TOKEN_SECRET: Joi.string().required(),
   ACCESS_TOKEN_EXPIRY: Joi.string().default("5m"),
   REFRESH_TOKEN_EXPIRY: Joi.string().default("7d"),
 
@@ -24,6 +26,7 @@ const configSchema = Joi.object({
   LOG_LEVEL: Joi.string()
     .valid("debug", "info", "warn", "error")
     .default("debug"),
+  ENABLE_DB_LOGGING: Joi.boolean().truthy("true").falsy("false").default(false),
 });
 
 const { error, value: config } = configSchema.validate(process.env, {
