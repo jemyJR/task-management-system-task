@@ -20,8 +20,9 @@ jobs:
           # Allowed types
           TYPES="feature|bug-fix|refactor|docs|style|test|chore|perf|build|ci"
 
-          # Regex for format: {type}/{JIRA_ID}/summary
-          BRANCH_REGEX="^($TYPES)\/[a-z0-9]+\/[a-z0-9-]+$"
+          # Format: {type}/{jira-id-summary}
+          # Example: feature/task2-auth-module
+          BRANCH_REGEX="^($TYPES)\/[A-Za-z0-9]+(-[A-Za-z0-9]+)*$"
 
           if [[ ! "$BRANCH_NAME" =~ $BRANCH_REGEX ]]; then
             echo "❌ ERROR: Branch name '$BRANCH_NAME' does not match the convention '{type}/{JIRA_ID}/summary'."
