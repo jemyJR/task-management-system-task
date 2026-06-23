@@ -1,0 +1,33 @@
+name: Check Branch Name
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-branch-name:
+    name: Validate Branch Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Branch Name
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          echo "Checking branch name: $BRANCH_NAME"
+
+          # Allowed types
+          TYPES="feature|bug-fix|refactor|docs|style|test|chore|perf|build|ci"
+
+          # Regex for format: {type}/{JIRA_ID}/summary
+          BRANCH_REGEX="^($TYPES)\/[a-z0-9]+\/[a-z0-9-]+$"
+
+          if [[ ! "$BRANCH_NAME" =~ $BRANCH_REGEX ]]; then
+            echo "❌ ERROR: Branch name '$BRANCH_NAME' does not match the convention '{type}/{JIRA_ID}/summary'."
+            echo "Example: feature/PROJ-123/jwt-auth"
+            echo "Allowed types: $TYPES"
+            echo "JIRA ID must be lowercase alphanumeric characters followed by a hyphen and numbers."
+            exit 1
+          fi
+          echo "✅ Branch name is valid!"
