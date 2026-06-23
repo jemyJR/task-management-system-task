@@ -18,6 +18,14 @@ Project:
       type: array
       items:
         $ref: "#/components/schemas/Task"
+    createdAt:
+      type: string
+      format: date-time
+      example: "2026-06-23T20:27:08.000Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2026-06-23T20:27:08.000Z"
 
 CreateProjectRequest:
   type: object
@@ -35,12 +43,6 @@ CreateProjectRequest:
       type: string
       enum: [PLANNING, IN_PROGRESS, COMPLETED, ON_HOLD]
       example: "PLANNING"
-    tasks:
-      type: array
-      items:
-        type: string
-      example:
-        - "507f1f77bcf86cd799439011"
 
 UpdateProjectRequest:
   type: object
@@ -55,12 +57,6 @@ UpdateProjectRequest:
       type: string
       enum: [PLANNING, IN_PROGRESS, COMPLETED, ON_HOLD]
       example: "COMPLETED"
-    tasks:
-      type: array
-      items:
-        type: string
-      example:
-        - "507f1f77bcf86cd799439011"
 
 ProjectResponse:
   type: object
@@ -95,6 +91,9 @@ Task:
     _id:
       type: string
       example: "507f1f77bcf86cd799439012"
+    project:
+      type: string
+      example: "507f1f77bcf86cd799439011"
     title:
       type: string
       example: "Create Swagger docs"
@@ -113,14 +112,26 @@ Task:
       type: string
       format: date-time
       example: "2026-07-01T00:00:00.000Z"
+    createdAt:
+      type: string
+      format: date-time
+      example: "2026-06-23T20:27:08.000Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2026-06-23T20:27:08.000Z"
 
 CreateTaskRequest:
   type: object
   required:
+    - project
     - title
     - description
     - dueDate
   properties:
+    project:
+      type: string
+      example: "507f1f77bcf86cd799439011"
     title:
       type: string
       example: "Create Swagger docs"
@@ -143,6 +154,9 @@ CreateTaskRequest:
 UpdateTaskRequest:
   type: object
   properties:
+    project:
+      type: string
+      example: "507f1f77bcf86cd799439011"
     title:
       type: string
       example: "Update Swagger docs"

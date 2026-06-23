@@ -15,8 +15,8 @@ export const createTask = async (req, res, next) => {
 
 export const getAllTasks = async (req, res, next) => {
   try {
-    const { status, priority } = req.query;
-    const tasks = await taskService.getAllTasks({ status, priority });
+    const { status, priority, project } = req.query;
+    const tasks = await taskService.getAllTasks({ status, priority, project });
 
     res.status(200).json({
       message: "Tasks retrieved successfully",
@@ -43,10 +43,7 @@ export const getTaskById = async (req, res, next) => {
 export const updateTask = async (req, res, next) => {
   try {
     const { id, ...taskData } = req.cleanedBody || req.body;
-    const task = await taskService.updateTask(
-      req.params.id,
-      taskData,
-    );
+    const task = await taskService.updateTask(req.params.id, taskData);
 
     res.status(200).json({
       message: "Task updated successfully",

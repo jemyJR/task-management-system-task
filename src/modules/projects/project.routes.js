@@ -6,7 +6,6 @@ import * as projectController from "./project.controller.js";
 import {
   createProjectValidator,
   deleteProjectValidator,
-  getAllProjectsValidator,
   getProjectValidator,
   updateProjectValidator,
 } from "./project.validators.js";
@@ -18,7 +17,6 @@ projectRouter.use(authMiddleware);
 projectRouter.get(
   "/",
   requirePermission(PERMISSIONS.VIEW_PROJECTS),
-  getAllProjectsValidator,
   projectController.getAllProjects,
 );
 

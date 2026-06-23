@@ -3,7 +3,7 @@
     tags:
       - Tasks
     summary: List tasks
-    description: Return all tasks, optionally filtered by status and priority.
+    description: Return all tasks, optionally filtered by status, priority, and project ID.
     parameters:
       - in: query
         name: status
@@ -17,6 +17,12 @@
         schema:
           type: string
           enum: [LOW, MEDIUM, HIGH]
+      - in: query
+        name: project
+        required: false
+        schema:
+          type: string
+          description: Filter tasks by Project ID
     responses:
       "200":
         description: Tasks retrieved successfully

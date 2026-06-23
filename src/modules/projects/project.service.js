@@ -1,5 +1,6 @@
 import { NotFoundException } from "../../shared/exceptions/http.exceptions.js";
 import logger from "../../shared/utils/logger.js";
+import Task from "../tasks/task.model.js";
 import Project from "./project.model.js";
 
 export const createProject = async (projectData) => {
@@ -49,5 +50,8 @@ export const deleteProject = async (id) => {
     throw new NotFoundException("Project not found");
   }
 
-  return "Project deleted successfully";
+  await Task.deleteMany({ project: id });
+  logger.info(`Deleted all tasks associated with project ${id}`);
+
+  return "Project and its associated tasks deleted successfully";
 };

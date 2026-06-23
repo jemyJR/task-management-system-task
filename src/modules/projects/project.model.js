@@ -23,13 +23,6 @@ const projectSchema = new Schema(
       default: ProjectStatus.PLANNING,
       required: true,
     },
-    tasks: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Task",
-        autopopulate: true,
-      },
-    ],
   },
   {
     timestamps: true,
@@ -46,7 +39,14 @@ projectSchema.pre(/^find/, function () {
 
 projectSchema.index({ status: 1 });
 projectSchema.index({ createdAt: -1 });
-
+projectSchema.virtual("tasks", {
+  ref: "Task",
+  localField: "_id",
+  foreignField: "project",
+  justOne: false,
+  options: { sort: { dueDate: 1, createdAt: -1 } },
+  autopopulate: true,
+});
 projectSchema.plugin(mongooseAutopopulate);
 projectSchema.plugin(
   mongooseHidden({

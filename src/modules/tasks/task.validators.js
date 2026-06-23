@@ -3,6 +3,11 @@ import { TaskPriority, TaskStatus } from "../../constants/shared.constants.js";
 import { validate } from "../../shared/utils/validators.js";
 
 export const createTaskValidator = [
+  body("project")
+    .notEmpty()
+    .withMessage("Project ID is required")
+    .isMongoId()
+    .withMessage("Invalid project ID format"),
   body("title")
     .notEmpty()
     .withMessage("Title is required")
@@ -16,7 +21,9 @@ export const createTaskValidator = [
   body("status")
     .optional()
     .isIn(Object.values(TaskStatus))
-    .withMessage(`Status must be one of: ${Object.values(TaskStatus).join(", ")}`),
+    .withMessage(
+      `Status must be one of: ${Object.values(TaskStatus).join(", ")}`,
+    ),
   body("priority")
     .optional()
     .isIn(Object.values(TaskPriority))
@@ -35,13 +42,19 @@ export const getAllTasksValidator = [
   query("status")
     .optional()
     .isIn(Object.values(TaskStatus))
-    .withMessage(`Status must be one of: ${Object.values(TaskStatus).join(", ")}`),
+    .withMessage(
+      `Status must be one of: ${Object.values(TaskStatus).join(", ")}`,
+    ),
   query("priority")
     .optional()
     .isIn(Object.values(TaskPriority))
     .withMessage(
       `Priority must be one of: ${Object.values(TaskPriority).join(", ")}`,
     ),
+  query("project")
+    .optional()
+    .isMongoId()
+    .withMessage("Invalid project ID format"),
   validate,
 ];
 
@@ -52,6 +65,10 @@ export const getTaskValidator = [
 
 export const updateTaskValidator = [
   param("id").isMongoId().withMessage("Invalid task ID format"),
+  body("project")
+    .optional()
+    .isMongoId()
+    .withMessage("Invalid project ID format"),
   body("title")
     .optional()
     .isLength({ min: 2, max: 100 })
@@ -63,7 +80,9 @@ export const updateTaskValidator = [
   body("status")
     .optional()
     .isIn(Object.values(TaskStatus))
-    .withMessage(`Status must be one of: ${Object.values(TaskStatus).join(", ")}`),
+    .withMessage(
+      `Status must be one of: ${Object.values(TaskStatus).join(", ")}`,
+    ),
   body("priority")
     .optional()
     .isIn(Object.values(TaskPriority))
