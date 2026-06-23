@@ -26,6 +26,8 @@
     "mongoose": "^9.7.2",
     "mongoose-autopopulate": "^1.2.1",
     "mongoose-hidden": "^1.9.1",
+    "winston": "^3.19.0",
+    "winston-mongodb": "^7.0.1",
     "xss-clean": "^0.1.4"
   }
 }
