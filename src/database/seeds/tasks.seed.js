@@ -11,7 +11,8 @@ const seedTasksData = [
   },
   {
     title: "Add project CRUD",
-    description: "Build project model, routes, validators, controller, and service",
+    description:
+      "Build project model, routes, validators, controller, and service",
     status: TaskStatus.IN_PROGRESS,
     priority: TaskPriority.HIGH,
     dueDate: new Date("2026-07-05T00:00:00.000Z"),
@@ -25,13 +26,13 @@ const seedTasksData = [
   },
 ];
 
-export const seedTasks = async () => {
+export const seedTasks = async (projectId) => {
   const tasks = [];
 
   for (const taskData of seedTasksData) {
     const task = await Task.findOneAndUpdate(
       { title: taskData.title },
-      { $set: taskData },
+      { $set: { ...taskData, project: projectId } },
       { new: true, upsert: true, runValidators: true },
     );
     tasks.push(task);

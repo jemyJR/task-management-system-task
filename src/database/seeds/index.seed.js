@@ -11,8 +11,10 @@ const runAllSeeds = async () => {
     console.log("Starting Database Seeding...");
 
     await seedUsers();
-    const tasks = await seedTasks();
-    await seedProjects(tasks);
+
+    const project = await seedProjects();
+
+    await seedTasks(project._id);
 
     console.log("All seeds finished successfully!");
   } catch (error) {

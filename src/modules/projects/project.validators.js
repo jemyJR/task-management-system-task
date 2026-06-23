@@ -19,11 +19,6 @@ export const createProjectValidator = [
     .withMessage(
       `Status must be one of: ${Object.values(ProjectStatus).join(", ")}`,
     ),
-  body("tasks")
-    .optional()
-    .isArray()
-    .withMessage("Tasks must be an array of task IDs"),
-  body("tasks.*").optional().isMongoId().withMessage("Invalid task ID format"),
   validate,
 ];
 
@@ -48,11 +43,6 @@ export const updateProjectValidator = [
     .withMessage(
       `Status must be one of: ${Object.values(ProjectStatus).join(", ")}`,
     ),
-  body("tasks")
-    .optional()
-    .isArray()
-    .withMessage("Tasks must be an array of task IDs"),
-  body("tasks.*").optional().isMongoId().withMessage("Invalid task ID format"),
   validate,
 ];
 
