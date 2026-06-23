@@ -1,0 +1,152 @@
+RegisterRequest:
+  type: object
+  required:
+    - name
+    - email
+    - password
+  properties:
+    name:
+      type: string
+      example: "Mohamed Gamal"
+    email:
+      type: string
+      format: email
+      example: "mohamed@gmail.com"
+    password:
+      type: string
+      format: password
+      minLength: 6
+      example: "securePassword123"
+    role:
+      type: string
+      enum: [ADMIN, USER]
+      example: "USER"
+
+LoginRequest:
+  type: object
+  required:
+    - email
+    - password
+  properties:
+    email:
+      type: string
+      format: email
+      example: "mohamed@gmail.com"
+    password:
+      type: string
+      format: password
+      example: "securePassword123"
+
+RefreshTokenRequest:
+  type: object
+  required:
+    - refreshToken
+  properties:
+    refreshToken:
+      type: string
+      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+AuthResponse:
+  type: object
+  properties:
+    accessToken:
+      type: string
+      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    refreshToken:
+      type: string
+      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    _id:
+      type: string
+      example: "507f1f77bcf86cd799439011"
+
+TokenResponse:
+  type: object
+  properties:
+    accessToken:
+      type: string
+      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    refreshToken:
+      type: string
+      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+LogoutResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Logged out successfully"
+
+User:
+  type: object
+  properties:
+    _id:
+      type: string
+      example: "507f1f77bcf86cd799439011"
+    name:
+      type: string
+      example: "Mohamed Gamal"
+    email:
+      type: string
+      format: email
+      example: "mohamed@gmail.com"
+    role:
+      type: string
+      enum: [ADMIN, USER]
+      example: "USER"
+
+UpdateUserRequest:
+  type: object
+  properties:
+    name:
+      type: string
+      example: "Mohamed Gamal"
+    email:
+      type: string
+      format: email
+      example: "mohamed@gmail.com"
+    password:
+      type: string
+      format: password
+      minLength: 6
+      example: "newPassword123"
+    role:
+      type: string
+      enum: [ADMIN, USER]
+      example: "ADMIN"
+
+ChangeUserRoleRequest:
+  type: object
+  required:
+    - role
+  properties:
+    role:
+      type: string
+      enum: [ADMIN, USER]
+      example: "ADMIN"
+
+UserResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "User retrieved successfully"
+    user:
+      $ref: "#/components/schemas/User"
+
+UserListResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Users retrieved successfully"
+    users:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+
+DeleteUserResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "User deleted successfully"

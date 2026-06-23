@@ -1,0 +1,173 @@
+/users:
+  get:
+    tags:
+      - Users
+    summary: List users
+    description: Return all users, optionally filtered by role.
+    parameters:
+      - in: query
+        name: role
+        schema:
+          type: string
+          enum: [ADMIN, USER]
+        required: false
+    responses:
+      "200":
+        description: Users retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserListResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnauthorizedError"
+      "403":
+        description: Forbidden
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForbiddenError"
+  post:
+    tags:
+      - Users
+    summary: Create user
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateUserRequest"
+    responses:
+      "201":
+        description: User created successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserResponse"
+      "400":
+        description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+      "409":
+        description: Email already exists
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConflictError"
+
+/users/role/{role}:
+  get:
+    tags:
+      - Users
+    summary: List users by role
+    parameters:
+      - in: path
+        name: role
+        required: true
+        schema:
+          type: string
+          enum: [ADMIN, USER]
+    responses:
+      "200":
+        description: Users retrieved successfully for role
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserListResponse"
+      "400":
+        description: Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+
+/users/{id}:
+  get:
+    tags:
+      - Users
+    summary: Get user by ID
+    parameters:
+      - $ref: "#/components/parameters/UserId"
+    responses:
+      "200":
+        description: User retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserResponse"
+      "404":
+        description: User not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotFoundError"
+  patch:
+    tags:
+      - Users
+    summary: Update user
+    parameters:
+      - $ref: "#/components/parameters/UserId"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateUserRequest"
+    responses:
+      "200":
+        description: User updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserResponse"
+      "409":
+        description: Email already exists
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConflictError"
+  delete:
+    tags:
+      - Users
+    summary: Delete user
+    parameters:
+      - $ref: "#/components/parameters/UserId"
+    responses:
+      "200":
+        description: User deleted successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteUserResponse"
+
+/users/{id}/role:
+  patch:
+    tags:
+      - Users
+    summary: Change user role
+    parameters:
+      - $ref: "#/components/parameters/UserId"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ChangeUserRoleRequest"
+    responses:
+      "200":
+        description: User role updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserResponse"
+      "422":
+        description: Invalid role
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnprocessableEntityError"

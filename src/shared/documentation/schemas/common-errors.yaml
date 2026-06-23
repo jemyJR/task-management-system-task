@@ -1,0 +1,73 @@
+UnauthorizedError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Access denied. No token provided"
+
+ForbiddenError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Insufficient permissions"
+
+ConflictError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "User with this email already exists"
+
+ValidationError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Validation failed"
+    errors:
+      type: array
+      items:
+        type: object
+        properties:
+          field:
+            type: string
+            example: "name"
+          message:
+            type: string
+            example: "Name is required"
+
+NotFoundError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Resource not found"
+
+ServerError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Internal server error"
+
+UnsupportedMediaTypeError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Only JPEG, JPG and PNG images are allowed"
+
+PayloadTooLargeError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "File too large. Maximum size is 5MB"
+
+UnprocessableEntityError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Image file is required"
