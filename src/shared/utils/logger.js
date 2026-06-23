@@ -49,17 +49,19 @@ const logger = winston.createLogger({
   exitOnError: false,
 });
 
-logger.add(
-  new winston.transports.MongoDB({
-    db: MONGO_URL,
-    collection: "app_logs",
-    level: LOG_LEVEL_IN_DATABASE,
-    format: combine(
-      timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-      errors({ stack: true }),
-      customFormat
-    ),
-  })
-);
+if (config.ENABLE_DB_LOGGING) {
+  logger.add(
+    new winston.transports.MongoDB({
+      db: MONGO_URL,
+      collection: "app_logs",
+      level: LOG_LEVEL_IN_DATABASE,
+      format: combine(
+        timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+        errors({ stack: true }),
+        customFormat
+      ),
+    })
+  );
+}
 
 export default logger;

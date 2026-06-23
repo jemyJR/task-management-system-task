@@ -1,0 +1,209 @@
+/auth/register:
+  post:
+    tags:
+      - Authentication
+    summary: Register a new user
+    description: Register a new user account
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterRequest"
+          example:
+            name: "Mohamed Gamal"
+            email: "mohamed@gmail.com"
+            password: "securePassword123"
+    responses:
+      "201":
+        description: User registered successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthResponse"
+            example:
+              data:
+                user:
+                  _id: "507f1f77bcf86cd799439011"
+                  name: "Mohamed Gamal"
+                  email: "mohamed@gmail.com"
+                  role: "USER"
+                tokens:
+                  accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      "400":
+        description: Bad request - Validation failed or phone already exists
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+            example:
+              message: "Validation failed"
+              errors:
+                - field: "email"
+                  message: "Email already exists"
+                - field: "password"
+                  message: "Password must be at least 6 characters"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServerError"
+
+/auth/login:
+  post:
+    tags:
+      - Authentication
+    summary: Login user
+    description: Authenticate user with email and password, returns access and refresh tokens
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginRequest"
+          example:
+            email: "mohamed@gmail.com"
+            password: "securePassword123"
+    responses:
+      "201":
+        description: Login successful
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthResponse"
+            example:
+              accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              _id: "507f1f77bcf86cd799439011"
+      "400":
+        description: Bad request - Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+            example:
+              message: "Validation failed"
+              errors:
+                - field: "email"
+                  message: "Email is required"
+                - field: "password"
+                  message: "Password is required"
+      "401":
+        description: Unauthorized - Invalid credentials
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnauthorizedError"
+            example:
+              message: "Invalid email or password"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServerError"
+
+/auth/refresh:
+  post:
+    tags:
+      - Authentication
+    summary: Refresh access token
+    description: Generate new access and refresh tokens using a valid refresh token
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshTokenRequest"
+          example:
+            refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    responses:
+      "201":
+        description: Token refreshed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenResponse"
+            example:
+              accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      "400":
+        description: Bad request - Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+            example:
+              message: "Validation failed"
+              errors:
+                - field: "refreshToken"
+                  message: "Refresh token is required"
+      "401":
+        description: Unauthorized - Invalid or expired refresh token
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnauthorizedError"
+            example:
+              message: "Invalid or expired refresh token"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServerError"
+
+/auth/logout:
+  post:
+    tags:
+      - Authentication
+    summary: Logout user
+    description: Logout user by invalidating the refresh token and incrementing token version
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshTokenRequest"
+          example:
+            refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    responses:
+      "201":
+        description: Logout successful
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LogoutResponse"
+            example:
+              message: "Logged out successfully from all devices"
+      "400":
+        description: Bad request - Validation failed
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationError"
+            example:
+              message: "Validation failed"
+              errors:
+                - field: "refreshToken"
+                  message: "Refresh token is required"
+      "401":
+        description: Unauthorized - Invalid or expired refresh token
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnauthorizedError"
+            example:
+              message: "Invalid or expired refresh token"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServerError"
