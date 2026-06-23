@@ -1,0 +1,190 @@
+Project:
+  type: object
+  properties:
+    _id:
+      type: string
+      example: "507f1f77bcf86cd799439011"
+    title:
+      type: string
+      example: "Task Management API"
+    description:
+      type: string
+      example: "Backend project for managing users, projects, and tasks"
+    status:
+      type: string
+      enum: [PLANNING, IN_PROGRESS, COMPLETED, ON_HOLD]
+      example: "IN_PROGRESS"
+    tasks:
+      type: array
+      items:
+        $ref: "#/components/schemas/Task"
+
+CreateProjectRequest:
+  type: object
+  required:
+    - title
+    - description
+  properties:
+    title:
+      type: string
+      example: "Task Management API"
+    description:
+      type: string
+      example: "Backend project for managing users, projects, and tasks"
+    status:
+      type: string
+      enum: [PLANNING, IN_PROGRESS, COMPLETED, ON_HOLD]
+      example: "PLANNING"
+    tasks:
+      type: array
+      items:
+        type: string
+      example:
+        - "507f1f77bcf86cd799439011"
+
+UpdateProjectRequest:
+  type: object
+  properties:
+    title:
+      type: string
+      example: "Updated Task Management API"
+    description:
+      type: string
+      example: "Updated backend project description"
+    status:
+      type: string
+      enum: [PLANNING, IN_PROGRESS, COMPLETED, ON_HOLD]
+      example: "COMPLETED"
+    tasks:
+      type: array
+      items:
+        type: string
+      example:
+        - "507f1f77bcf86cd799439011"
+
+ProjectResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Project retrieved successfully"
+    project:
+      $ref: "#/components/schemas/Project"
+
+ProjectListResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Projects retrieved successfully"
+    projects:
+      type: array
+      items:
+        $ref: "#/components/schemas/Project"
+
+DeleteProjectResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Project deleted successfully"
+
+Task:
+  type: object
+  properties:
+    _id:
+      type: string
+      example: "507f1f77bcf86cd799439012"
+    title:
+      type: string
+      example: "Create Swagger docs"
+    description:
+      type: string
+      example: "Document all API endpoints"
+    status:
+      type: string
+      enum: [TODO, IN_PROGRESS, DONE]
+      example: "IN_PROGRESS"
+    priority:
+      type: string
+      enum: [LOW, MEDIUM, HIGH]
+      example: "HIGH"
+    dueDate:
+      type: string
+      format: date-time
+      example: "2026-07-01T00:00:00.000Z"
+
+CreateTaskRequest:
+  type: object
+  required:
+    - title
+    - description
+    - dueDate
+  properties:
+    title:
+      type: string
+      example: "Create Swagger docs"
+    description:
+      type: string
+      example: "Document all API endpoints"
+    status:
+      type: string
+      enum: [TODO, IN_PROGRESS, DONE]
+      example: "TODO"
+    priority:
+      type: string
+      enum: [LOW, MEDIUM, HIGH]
+      example: "HIGH"
+    dueDate:
+      type: string
+      format: date-time
+      example: "2026-07-01T00:00:00.000Z"
+
+UpdateTaskRequest:
+  type: object
+  properties:
+    title:
+      type: string
+      example: "Update Swagger docs"
+    description:
+      type: string
+      example: "Document new projects and tasks modules"
+    status:
+      type: string
+      enum: [TODO, IN_PROGRESS, DONE]
+      example: "DONE"
+    priority:
+      type: string
+      enum: [LOW, MEDIUM, HIGH]
+      example: "MEDIUM"
+    dueDate:
+      type: string
+      format: date-time
+      example: "2026-07-05T00:00:00.000Z"
+
+TaskResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Task retrieved successfully"
+    task:
+      $ref: "#/components/schemas/Task"
+
+TaskListResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Tasks retrieved successfully"
+    tasks:
+      type: array
+      items:
+        $ref: "#/components/schemas/Task"
+
+DeleteTaskResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Task deleted successfully"
