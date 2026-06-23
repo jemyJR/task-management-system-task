@@ -17,6 +17,31 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  parameters:
+    UserId:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+        pattern: "^[0-9a-fA-F]{24}$"
+      description: MongoDB user ID
+    ProjectId:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+        pattern: "^[0-9a-fA-F]{24}$"
+      description: MongoDB project ID
+    TaskId:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+        pattern: "^[0-9a-fA-F]{24}$"
+      description: MongoDB task ID
 
 security:
   - bearerAuth: []
