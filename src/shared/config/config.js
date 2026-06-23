@@ -9,6 +9,8 @@ const configSchema = Joi.object({
     .valid("development", "staging", "production")
     .default("development"),
 
+  MONGO_URI: Joi.string().required(),
+
   DB_USER: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
   DB_HOST: Joi.string().required(),
