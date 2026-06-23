@@ -39,6 +39,27 @@ src/
     utils/
 ```
 
+## Single Module Structure
+
+Each feature module follows the same pattern, which keeps the codebase consistent and easy to extend.
+
+```text
+src/modules/<module-name>/
+  <module-name>.controller.js   # HTTP layer and request/response handling
+  <module-name>.service.js      # Business logic and database operations
+  <module-name>.routes.js       # Route definitions and middleware wiring
+  <module-name>.validators.js   # Request validation rules
+  <module-name>.model.js        # Mongoose schema and model
+  <module-name>.test.js         # Jest tests for the module service
+```
+
+Current modules:
+
+- `auth` - register, login, refresh token, logout
+- `users` - user administration and role management
+- `projects` - project CRUD operations
+- `tasks` - task CRUD operations and project association
+
 ## Features
 
 - Authentication flow:
@@ -66,6 +87,17 @@ src/
 
 - Base API: `http://localhost:3000/api/v1`
 - Swagger UI: `http://localhost:3000/api-docs`
+
+## Live Deployment
+
+- Swagger UI: https://task-management-system-task.up.railway.app/api-docs/#/
+
+## Demo Admin Account
+
+Use this account on the deployed environment:
+
+- Email: `mohamed@admin.com`
+- Password: `admin@123`
 
 ## Prerequisites
 
@@ -192,6 +224,11 @@ Default seed users:
   - Role: `USER`
 
 Change these immediately for any non-local environment.
+
+The deployed Railway environment also exposes a demo admin account:
+
+- Email: `mohamed@admin.com`
+- Password: `admin@123`
 
 ## Authentication and Authorization
 
