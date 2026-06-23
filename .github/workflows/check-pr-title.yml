@@ -21,8 +21,8 @@ jobs:
           # Allowed types
           TYPES="feature|bug-fix|refactor|docs|style|test|chore|perf|build|ci"
 
-          # Regex for format: {type}(JIRA_ID): summary
-          PR_REGEX="^($TYPES)\([a-z0-9]+\):\s.+$"
+          # Example: feature(Task2): User and Auth modules
+          PR_REGEX="^($TYPES)\([A-Za-z0-9-]+\):\s.+$"
 
           if [[ ! "$PR_TITLE" =~ $PR_REGEX ]]; then
             echo "❌ ERROR: PR title '$PR_TITLE' does not match the convention '{type}(JIRA_ID): summary'."
