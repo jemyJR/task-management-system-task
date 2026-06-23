@@ -76,5 +76,5 @@ export const logout = async (refreshToken) => {
 
   logger.info(`User ${userId} logged out, all tokens invalidated`);
 
-  return "Logged out successfully from all devices";
+  return { message: "User logged out successfully" };
 };

@@ -130,7 +130,7 @@ describe("auth service", () => {
 
   test("logout invalidates all user tokens", async () => {
     await expect(authService.logout("refresh-token")).resolves.toEqual({
-      message: "Logged out successfully from all devices",
+      message: "User logged out successfully",
     });
 
     expect(verifyRefreshTokenMock).toHaveBeenCalledWith("refresh-token");
